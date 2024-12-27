@@ -1,0 +1,86 @@
+# Python bytecode files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Virtual environment folders
+env/
+
+# Python egg files
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Logs
+*.log
+
+# IDE-specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Coverage reports
+.coverage
+coverage.xml
+htmlcov/
+
+# Testing artifacts
+*.pytest_cache
+.tox/
+.pytest_cache/
+.nox/
+.testmondata
+
+# pip related files
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# FastAPI specific
+instance/
+debug.log
+
+# Docker related
+docker-compose.override.yml
+.dockerignore
+*.env
+.env.*
+
+# Static files (if applicable)
+staticfiles/
+mediafiles/
+
+# SQL database files
+*.sqlite3
+db.sqlite3
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyright
+pyrightconfig.json
+
+# Cache and compiled files
+*.cache
+.cache/
+*.temp
+*.tmp
+
+# Generated files
+*.lock
+node_modules/
