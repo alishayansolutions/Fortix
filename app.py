@@ -151,7 +151,6 @@ async def list_streams():
 def test_model():
     try:
         model = YOLO("hard-hat.pt")  # Replace with the actual path to your model file
-        model = YOLO("hard-hat.pt")
         frame = cv2.imread("sample.jpg")
         result = model(frame)
         print(result)
