@@ -17,3 +17,10 @@ class RTMPPConfig(BaseModel):
 class CloudConfig(BaseModel):
     stream_id: str ="ss" 
     link: str 
+
+class FTPConfig(BaseModel):
+    ftp_host: str  
+    ftp_port: int = 21
+    username: str    
+    password: str   
+    ftp_directory: str   

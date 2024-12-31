@@ -5,8 +5,8 @@ import os
 import threading
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
-from models import RTSPConfig, RTMPPConfig, CloudConfig
-from stream_connection import check_connection
+from models import RTSPConfig, RTMPPConfig, CloudConfig, FTPConfig
+from stream_connection import check_connection, check_ftp_connection
 from ultralytics import YOLO
 import supervision as sv
 import time
@@ -25,9 +25,12 @@ setup_directories(folders_to_create)
 stream_registry = {}
 
 async def start_stream_helper(config, stream_type):
-    streaming_url = get_streaming_link(config, stream_type)
+    if stream_type.upper() == "FTP":
+       await check_ftp_connection(config)
+    else:
+       await check_connection(config, stream_type)
 
-    await check_connection(config, stream_type)
+    streaming_url = get_streaming_link(config, stream_type)
 
     # Output HLS directory for this stream
     stream_dir = os.path.join(STREAMS_DIR, config.stream_id)
@@ -90,6 +93,15 @@ async def check_rtsp_connection(config: CloudConfig):
 @app.post("/cloud/start_stream")
 async def start_cloud_stream(config: CloudConfig):
     return await start_stream_helper(config, "CLOUD")
+
+# CLOUD MODULE
+@app.post("/check/ftp_connection")
+async def check_ftp_connection(config: FTPConfig):
+    return await check_ftp_connection(config)     
+
+@app.post("/ftp/start_stream")
+async def start_ftp_stream(config: FTPConfig):
+    return await start_stream_helper(config, "FTP")    
 
 @app.get("/stop_stream/{stream_id}")
 async def stop_rtsp_stream(stream_id: str):

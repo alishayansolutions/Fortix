@@ -8,8 +8,10 @@ def get_streaming_link(config, type):
         return f"rtmp://{config.server_address}/{config.app_name}/{config.stream_key}"
     elif type.upper() == "CLOUD":
         return config.link
+    elif type.upper() == "FTP":
+        return f"ftp://{config.ftp_host}:{config.ftp_port}/{config.ftp_directory}"    
     else:
-        raise ValueError("Invalid link type. Must be 'RTSP' or 'CLOUD'.")
+        raise ValueError("Invalid link type. Must be 'RTSP', 'RTMP', 'CLOUD', or 'FTP'.")
 
 def create_directory(path):
     try:
