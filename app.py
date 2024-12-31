@@ -151,10 +151,14 @@ async def list_streams():
 def test_model():
     try:
         model = YOLO("hard-hat.pt")  # Replace with the actual path to your model file
+        model = YOLO("hard-hat.pt")
+        frame = cv2.imread("sample.jpg")
+        result = model(frame)
+        print(result)
+
         return ModelLoadResponse(success=True, message="Model loaded successfully.")
     except Exception as e:
         error_message = f"Failed to load YOLO model: {str(e)}"
-        traceback.print_exc()
         raise HTTPException(status_code=500, detail=error_message)
 
 # Serve HLS files
