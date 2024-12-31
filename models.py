@@ -23,4 +23,8 @@ class FTPConfig(BaseModel):
     ftp_port: int = 21
     username: str    
     password: str   
-    ftp_directory: str   
+    ftp_directory: str 
+
+class ModelLoadResponse(BaseModel):
+    success: bool
+    message: str      

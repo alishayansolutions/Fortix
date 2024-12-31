@@ -5,7 +5,7 @@ import os
 import threading
 from fastapi import FastAPI, HTTPException
 from fastapi.staticfiles import StaticFiles
-from models import RTSPConfig, RTMPPConfig, CloudConfig, FTPConfig
+from models import RTSPConfig, RTMPPConfig, CloudConfig, FTPConfig, ModelLoadResponse
 from stream_connection import check_connection, check_ftp_connection
 from ultralytics import YOLO
 import supervision as sv
@@ -13,6 +13,7 @@ import time
 from functools import partial
 from stream_process import process_stream_via_model 
 from helper import setup_directories, get_streaming_link
+from ultralytics import YOLO
 
 app = FastAPI()
 
@@ -145,6 +146,16 @@ async def stop_rtsp_stream(stream_id: str):
 @app.get("/list-streams")
 async def list_streams():
     return {"active_streams": list(stream_registry.keys())}
+
+@app.get("/test_model", response_model=ModelLoadResponse)
+def test_model():
+    try:
+        model = YOLO("hard-hat.pt")  # Replace with the actual path to your model file
+        return ModelLoadResponse(success=True, message="Model loaded successfully.")
+    except Exception as e:
+        error_message = f"Failed to load YOLO model: {str(e)}"
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=error_message)
 
 # Serve HLS files
 app.mount("/streams", StaticFiles(directory=STREAMS_DIR), name="streams")
