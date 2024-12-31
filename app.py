@@ -152,6 +152,7 @@ def test_model():
     try:
         model = YOLO("hard-hat.pt")  # Replace with the actual path to your model file
         frame = cv2.imread("sample.jpg")
+        print("frame", frame)
         result = model(frame)
         print(result)
 
